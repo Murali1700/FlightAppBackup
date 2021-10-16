@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header card-header-warning row">
+                <div class="col-md-3 mt-3">
+                    <h4 class="card-title">Airline</h4>
+                </div>
+                <div class="col-md-2 offset-md-7">
+                    <button type="button" (click)="addAirline()" mat-raised-button
+                        class="btn btn-info justify-content-end">Reigster</button>
+                </div>
+            </div>
+            <div class="card-content table-responsive table-full-width">
+                <table class="table">
+                    <thead class="text-info">
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Contact Number</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let airline of airlinesModel">
+                            <td class="text-center">{{airline.name}}</td>
+                            <td class="text-center">{{airline.contactNumber}}</td>
+                            <td class="text-center">{{airline.address}}</td>
+                            <td class="text-center">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-4" (click)="updateAirline(airline)"
+                                        style="cursor: pointer;">
+                                        <span class="material-icons" (click)="updateAirline(airline)">edit</span>
+                                    </div>
+                                    <div class="col-md-2" style="cursor: pointer;">
+                                        <span class="material-icons">delete</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

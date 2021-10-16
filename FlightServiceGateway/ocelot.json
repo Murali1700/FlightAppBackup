@@ -1,0 +1,48 @@
+{
+
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/User",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "63594"
+        }
+      ],
+      "Key": "User",
+      "UpstreamPathTemplate": "/UserLogin",
+      "UpstreamHttpMethods": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/airline",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "63605"
+        }
+      ],
+      "Key": "Airline",
+      "UpstreamPathTemplate": "/airline",
+      "UpstreamHttpMethods": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/booking",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "63609"
+        }
+      ],
+      "Key": "Booking",
+      "UpstreamPathTemplate": "/booking",
+      "UpstreamHttpMethods": [ "GET", "POST", "PUT", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:51651"
+  }
+
+}
