@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-header card-header-info ">
+                <h4 class="card-title">{{action}} Flight</h4>
+            </div>
+            <div class="card-body">
+                <form novalidate #registerFlight="ngForm" (submit)="onSubmit()">
+                    <div>{{registerFlight.value | json}}</div>
+                    <div>{{registerFlight.invalid}}</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select type="text" #name="ngModel" [(ngModel)]="flightModel.airlineId" name="name"
+                                    [disabled]="action == 'Update'" class="form-control"
+                                    [class.has-danger]="name.invalid && name.touched" required>
+                                    <option [value]=0>Select Airline</option>
+                                    <option *ngFor="let airline of airlines" [value]="airline.id">
+                                        {{airline.name}}</option>
+                                </select>
+                                <small class="text-danger" *ngIf="name.invalid && name.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" #flightNo="ngModel" [(ngModel)]="flightModel.flightNumber"
+                                    name="flightNo" class="form-control" placeholder="Enter Flight Number"
+                                    [class.has-danger]="flightNo.invalid && flightNo.touched" pattern="[0-9]+"
+                                    minlength="6" maxlength="6" required>
+                                <small class="text-danger" *ngIf="!flightNo.valid && flightNo.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="col-md-12">Seats: {{flightModel.totalSeats}}</h4>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" #economy="ngModel" [(ngModel)]="flightModel.economySeats"
+                                    name="economy" class="form-control" placeholder="Total Economy Seats"
+                                    [class.has-danger]="economy.invalid && economy.touched" pattern="[0-9]+"
+                                    maxlength="2" (change)="calculateTotalSeats()" required>
+                                <small class="text-danger" *ngIf="!economy.valid && economy.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" #business="ngModel" [(ngModel)]="flightModel.businessSeats"
+                                    name="business" class="form-control" placeholder="Total Business Seats"
+                                    [class.has-danger]="business.invalid && business.touched" pattern="[0-9]+"
+                                    maxlength="2" (change)="calculateTotalSeats()" required>
+                                <small class="text-danger" *ngIf="!business.valid && business.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" #economyPrice="ngModel" [(ngModel)]="flightModel.economyPrice"
+                                    name="economyPrice" class="form-control" placeholder="Economy Seat Price"
+                                    [class.has-danger]="economyPrice.invalid && economyPrice.touched" pattern="[0-9]+"
+                                    maxlength="7" required>
+                                <small class="text-danger" *ngIf="!economyPrice.valid && economyPrice.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" #businessPrice="ngModel" [(ngModel)]="flightModel.businessPrice"
+                                    name="businessPrice" class="form-control" placeholder="Business Seat Price"
+                                    [class.has-danger]="businessPrice.invalid && businessPrice.touched" pattern="[0-9]+"
+                                    maxlength="7" required>
+                                <small class="text-danger" *ngIf="!businessPrice.valid && businessPrice.touched">This is
+                                    required field</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" [disabled]="registerFlight.invalid" mat-raised-button
+                        class="btn btn-info">Submit</button>
+                    <button type="button" (click)="navigateViewFlight()" mat-raised-button
+                        class="btn btn-dark">Back</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

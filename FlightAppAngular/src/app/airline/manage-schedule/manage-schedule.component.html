@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-header card-header-info ">
+                <h4 class="card-title">Select Airline and Flight</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select type="text" #airlineName="ngModel" [(ngModel)]="flightModel.airlineId"
+                                name="airlineName" class="form-control" (change)="updateFlight(flightModel.airlineId)"
+                                [class.has-danger]="airlineName.invalid && airlineName.touched">
+                                <option [value]=0>Select Airline</option>
+                                <option *ngFor="let airline of airlines" [value]="airline.id">
+                                    {{airline.name}}</option>
+                            </select>
+                            <small class="text-danger" *ngIf="airlineName.invalid && airlineName.touched">This is
+                                required field</small>
+                        </div>
+                    </div>
+                    <div *ngIf="!hideFlight" class="col-md-6">
+                        <div class="form-group">
+                            <select type="text" #airlineFlight="ngModel" [(ngModel)]="flightModel.id"
+                                name="airlineFlight" class="form-control" (change)="selectFlightModel(flightModel.id)"
+                                [class.has-danger]="airlineFlight.invalid && airlineFlight.touched" required>
+                                <option [value]=0>Select Flight</option>
+                                <ng-container *ngFor="let flight of allFlight">
+                                    <option *ngIf="flight.airlineId == flightModel.airlineId" [value]="flight.id">
+                                        {{flight.flightNumber}}</option>
+                                </ng-container>
+                            </select>
+                            <small class="text-danger" *ngIf="airlineFlight.invalid && airlineFlight.touched">This is
+                                required field</small>
+                        </div>
+                    </div>
+                    <div *ngIf="showAddFlight" class="col-md-6">
+                        <div class="form-group">
+                            <button type="submit" (click)="routeToAddFlight()" mat-raised-button
+                                class="btn btn-info">Add Flight</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!hideSchedule">
+                    <form novalidate #scheduleFlight="ngForm">
+                        <div>{{scheduleFlight.value | json}}</div>
+                        <div>{{scheduleFlight.invalid}}</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!-- <select type="text" #source="ngModel" [(ngModel)]="flightModel.schedule.source"
+                                        name="source" class="form-control"
+                                        [class.has-danger]="source.invalid && source.touched" required>
+                                        <option [value]=0>Select Airline</option>
+                                        <option *ngFor="let airline of airlines" [value]="airline.id">
+                                            {{airline.name}}</option>
+                                    </select> -->
+                                    <input type="text" #source="ngModel" [(ngModel)]="flightModel.schedule.source"
+                                        name="source" class="form-control" placeholder="Source City Name"
+                                        [class.has-danger]="source.invalid && source.touched" required>
+                                    <small class="text-danger" *ngIf="source.invalid && source.touched">This is
+                                        required field</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!-- <select type="text" #source="ngModel" [(ngModel)]="flightModel.schedule.source"
+                                        name="source" class="form-control"
+                                        [class.has-danger]="source.invalid && source.touched" required>
+                                        <option [value]=0>Select Airline</option>
+                                        <option *ngFor="let airline of airlines" [value]="airline.id">
+                                            {{airline.name}}</option>
+                                    </select>  -->
+                                    <input type="text" #destination="ngModel"
+                                        [(ngModel)]="flightModel.schedule.destination" name="destination"
+                                        class="form-control" placeholder="Destination City Name"
+                                        [class.has-danger]="destination.invalid && destination.touched" required>
+                                    <small class="text-danger" *ngIf="destination.invalid && destination.touched">This
+                                        is
+                                        required field</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="takeOffTime"><strong>Takeoff Time</strong></label>
+                                    <input type="time" #takeOffTime="ngModel"
+                                        [(ngModel)]="flightModel.schedule.takeOffTime" name="takeOffTime"
+                                        class="form-control pt-0" [format]="24" placeholder="Take Off Time"
+                                        [class.has-danger]="takeOffTime.invalid && takeOffTime.touched" required>
+                                    <small class="text-danger" *ngIf="takeOffTime.invalid && takeOffTime.touched">This
+                                        is
+                                        required field</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="landingTime"><strong>Landing Time</strong></label>
+                                    <input type="time" #landingTime="ngModel"
+                                        [(ngModel)]="flightModel.schedule.landingTime" name="landingTime"
+                                        class="form-control pt-0" [format]="24" placeholder="Landing Time"
+                                        [class.has-danger]="landingTime.invalid && landingTime.touched" required>
+                                    <small class="text-danger" *ngIf="landingTime.invalid && landingTime.touched">This
+                                        is
+                                        required field</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">Scheduled Days</div>
+                            <div class="form-check ml-4 col-md-2"
+                                *ngFor="let schedule of flightModel.schedule.schedule">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" #schedule{{schedule.id}}
+                                        name="schedule{{schedule.id}}" type="checkbox" [(ngModel)]="schedule.value"
+                                        (change)="setSchedule(schedule)" [value]="schedule.value">
+                                    {{schedule.name}}
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" *ngIf="addSchedule" (click)="onSubmit('Add')"
+                                    [disabled]="scheduleFlight.invalid" mat-raised-button class="btn btn-info">Add
+                                    Schedule</button>
+                                <button type="submit" (click)="onSubmit('Update')" *ngIf="!addSchedule"
+                                    [disabled]="scheduleFlight.invalid" mat-raised-button class="btn btn-info">Update
+                                    Schedule</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
